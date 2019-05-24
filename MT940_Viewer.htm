@@ -58,42 +58,42 @@ function logMT940(file){
       nieuweRijInTabel(table, "Saldo początkowe: ", numberFormat(s.openingBalance), s.currency );
 
       // :60: openingBalanceDate - tag 60 statement opening date
-      nieuweRijInTabel(table, "Data rozpoczęcia: ".concat(s.statementDate) );
+      nieuweRijInTabel(table, "Data rozpoczęcia: ".concat(s.statementDate.toLocalDate()) );
 
       // :28: statement - tag 28 main statement number
-      nieuweRijInTabel(table, "Numer: ".concat(s.statement) );
+      //nieuweRijInTabel(table, "Numer: ".concat(s.statement) );
       console.log("Bankafschrift Beginsaldo: ", numberFormat(s.openingBalance), s.currency);
 
       for (let t of s.transactions) {
 
         // date - transaction date
-        nieuweRijInTabel(table," - Data transakcji: ".concat(t.date.toLocaleDateString()) );
+        nieuweRijInTabel(table," Data transakcji: ".concat(t.date.toLocaleDateString()), numberFormat(t.amount), t.currency );
      
         // amount - transaction amount (with sign, Credit+, Debit-)
         // currency - transaction currency (copy of statement currency)
         // Amount en Currency
-        nieuweRijInTabel(table, " - transakcja: ", numberFormat(t.amount), t.currency );
+        //nieuweRijInTabel(table, " - transakcja: ", numberFormat(t.amount), t.currency );
         
         // :86: details - content of relevant 86 tag(s), may be multiline (`\n` separated)
-        nieuweRijInTabel(table, t.details );
+        nieuweRijInTabel(table,t.reference, t.details, "" );
 
         // :?: transactionType - MT940 transaction type code (e.g. NTRF ...)
-        nieuweRijInTabel(table, t.transactionType );
+        //nieuweRijInTabel(table, t.transactionType );
 
         // :?: reference - payment reference field
-        nieuweRijInTabel(table, t.reference );
+        //nieuweRijInTabel(table, t.reference );
 
         // entryDate - optional, entry date field
-        nieuweRijInTabel(table, t.entryDate );
+        //nieuweRijInTabel(table, t.entryDate );
 
         // fundsCode - optional, funds code field
-        nieuweRijInTabel(table, t.fundsCode );
+        //nieuweRijInTabel(table, t.fundsCode );
 
         // bankReference - optional, bank reference
-        nieuweRijInTabel(table, t.bankReference );
+        //nieuweRijInTabel(table, t.bankReference );
 
         // extraDetails - optional, extra details
-        nieuweRijInTabel(table, t.extraDetails );
+        //nieuweRijInTabel(table, t.extraDetails );
         
 
 
