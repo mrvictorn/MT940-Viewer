@@ -54,25 +54,25 @@ function logMT940(file){
     for (let s of statements) {
       console.log("Bankafschrift: ", s.number.statement, "Datum: ", s.statementDate);
 
-      nieuweRijInTabel(table, "Bankafschrift: ");
-      nieuweRijInTabel(table, "Bankafschrift Beginsaldo: ", numberFormat(s.openingBalance), s.currency );
+      nieuweRijInTabel(table, "Wyciąg bankowy: ");
+      nieuweRijInTabel(table, "Saldo początkowe: ", numberFormat(s.openingBalance), s.currency );
 
       // :60: openingBalanceDate - tag 60 statement opening date
-      nieuweRijInTabel(table, "Bankafschrift Begindatum: ".concat(s.statementDate) );
+      nieuweRijInTabel(table, "Data rozpoczęcia: ".concat(s.statementDate) );
 
       // :28: statement - tag 28 main statement number
-      nieuweRijInTabel(table, "Bankafschrift Nummer: ".concat(s.statement) );
+      nieuweRijInTabel(table, "Numer: ".concat(s.statement) );
       console.log("Bankafschrift Beginsaldo: ", numberFormat(s.openingBalance), s.currency);
 
       for (let t of s.transactions) {
 
         // date - transaction date
-        nieuweRijInTabel(table," - TransactieDatum: ".concat(t.date) );
+        nieuweRijInTabel(table," - Data transakcji: ".concat(t.date.toLocaleDateString()) );
      
         // amount - transaction amount (with sign, Credit+, Debit-)
         // currency - transaction currency (copy of statement currency)
         // Amount en Currency
-        nieuweRijInTabel(table, " - Transactie: ", numberFormat(t.amount), t.currency );
+        nieuweRijInTabel(table, " - transakcja: ", numberFormat(t.amount), t.currency );
         
         // :86: details - content of relevant 86 tag(s), may be multiline (`\n` separated)
         nieuweRijInTabel(table, t.details );
@@ -102,7 +102,7 @@ function logMT940(file){
         console.log("Transactie Description: ", t.details);
       }
       // closingBalance - ending balance of the statement
-      nieuweRijInTabel(table, "Bankafschrift Eindsaldo: ", numberFormat(s.closingBalance), s.currency );
+      nieuweRijInTabel(table, "Saldo końcowe: ", numberFormat(s.closingBalance), s.currency );
       console.log("Bankafschrift Eindsaldo: ", numberFormat(s.closingBalance), s.currency);
       console.log("-------------------------------------------------------");
     }
@@ -128,24 +128,21 @@ function updateSize() {
 </head>
 
 <body>
-
-<h1>MT940 Viewer</h1>
+<img src='logo.png' />
+<h1>BNP Paribas Bank Polska</h1>
 <br>
 
-<div class="helptekst">
-Open een MT940 bestand met de knop 'bladeren'<br>
-</div>
 <form name="uploadForm">
 <p><input id="uploadInput" type="file" name="myFiles" onchange="updateSize();" multiple> selected files: <span id="fileNum">0</span></p>
 </form>
 
-<p>Zogenaamde 'hidden' input ?? </p>
+
 <!-- input type="file" id="fileElem" multiple style="display:none" onchange="updateSize(this.files)" -->
-<button id="fileSelect">Select files</button>
+<button id="fileSelect">Wybierz pliki</button>
 <br>
 
 <div class="helptekst">
-of sleep een MT940 bestand naar de 'dropzone' hier onder<br>
+
 </div>
 <!-- <div id="dropZone" style="width: 100px; height: 100px; border-color: #0000FF border:dashed; background-color:red" > -->
 <div id="dropZone" style="width: 300px; height: 100px; ">
